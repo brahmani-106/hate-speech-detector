@@ -2,37 +2,32 @@ import streamlit as st
 import joblib
 import numpy as np
 
-# ----------------- Page Setup -----------------
 st.set_page_config(page_title="Hate Speech Detector", layout="centered")
 st.title(" Hate Speech Detection Web App")
 st.write("This app detects whether the input text contains hate or offensive language.")
 
-# ----------------- Load Model -----------------
 try:
     model = joblib.load("model.pkl")
     vectorizer = joblib.load("vectorizer.pkl")
 except FileNotFoundError:
-    st.error("❌ Model or vectorizer file not found. Make sure 'model.pkl' and 'vectorizer.pkl' are in the same folder.")
+    st.error("Model or vectorizer file not found. Make sure 'model.pkl' and 'vectorizer.pkl' are in the same folder.")
     st.stop()
 except Exception as e:
     st.error(f"⚠️ Error loading model or vectorizer: {e}")
     st.stop()
 
-# ----------------- Input -----------------
-text_input = st.text_area("Enter your text below 👇", height=150)
+text_input = st.text_area("text goes here", height=150)
 
-# ----------------- Predict -----------------
 if st.button("🔍 Predict"):
     if not text_input.strip():
         st.warning("Please enter some text to analyze.")
     else:
         try:
-            # Vectorize and predict
+    
             X = vectorizer.transform([text_input])
             prediction_proba = model.predict_proba(X)[0][1]  # Probability of offensive
             result = "⚠️ Offensive" if prediction_proba > 0.7 else "✅ Non-Offensive"
 
-            # Output
             st.subheader("Prediction Result:")
             if result == "✅ Non-Offensive":
                 st.success(result)
