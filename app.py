@@ -4,7 +4,7 @@ import numpy as np
 
 # ----------------- Page Setup -----------------
 st.set_page_config(page_title="Hate Speech Detector", layout="centered")
-st.title("🛡️ Hate Speech Detection Web App")
+st.title(" Hate Speech Detection Web App")
 st.write("This app detects whether the input text contains hate or offensive language.")
 
 # ----------------- Load Model -----------------
